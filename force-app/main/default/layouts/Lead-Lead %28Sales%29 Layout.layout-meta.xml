@@ -69,6 +69,10 @@
                 <behavior>Edit</behavior>
                 <field>NN_RegionalBlocs__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NN_OwnerSince__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
