@@ -1,0 +1,41 @@
+<template>
+    <div class="container">
+        <template for:each={cases} for:item="Case">
+            <li key = {Case.Id} class="slds-m-around_medium">
+                <a onclick={handleClick} data-caseid={cases.Id}>
+                    {Case.CaseNumber}
+                    {Case.Subject}
+                    {Case.CreatedDate}<br>
+                </a>
+            </li>
+        </template>
+        
+
+
+
+          <!-- <lightning-card title="Hyperlink to The Name in Lightning Datatable"><br/>
+            <div if:true={cases}>
+               <lightning-datatable data={cases} 
+                                    columns={columns} 
+                                    key-field="Id"
+                                    hide-checkbox-column="true"></lightning-datatable>
+           </div>
+       </lightning-card>-->
+
+
+
+        <!--<template for:each={bikes} for:item="bike">
+            <c-tile 
+                key={bike.fields.Id.value} 
+                product={bike} 
+                ontileclick={handleTileClick}>-->
+        <template for:each={cases} for:item="Case">
+            <!--<c-tile 
+                key={Case.CaseNumber} 
+                product={Case} 
+                ontileclick={handleTileClick}>
+            </c-tile>-->
+            
+        </template>
+    </div>
+</template>
