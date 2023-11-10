@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>Lead</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
 		<members>*</members>
 		<name>CustomPermission</name>
+	</types>
+	<types>
+		<members>NN_LeadBeforeUpsert</members>
+		<name>Flow</name>
 	</types>
 	<types>
 		<members>Lead-Lead %28Marketing%29 Layout</members>
@@ -16,6 +24,10 @@
 		<members>Admin</members>
 		<members>ContractManager</members>
 		<name>Profile</name>
+	</types>
+	<types>
+		<members>Lead.NN_ChangeOwnerWithoutData</members>
+		<name>ValidationRule</name>
 	</types>
 	<version>58.0</version>
 </Package>
