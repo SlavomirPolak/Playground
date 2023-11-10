@@ -2,7 +2,7 @@
     <div class="container">
         <template for:each={cases} for:item="Case">
             <li key = {Case.Id} class="slds-m-around_medium">
-                <a onclick={handleClick} data-caseid={cases.Id}>
+                <a onclick={handleClick} data-caseid={cases.Id}>   
                     {Case.CaseNumber}
                     {Case.Subject}
                     {Case.CreatedDate}<br>
