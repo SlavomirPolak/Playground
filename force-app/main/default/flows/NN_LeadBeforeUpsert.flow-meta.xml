@@ -44,7 +44,7 @@
         <connector>
             <targetReference>NN_RecalculateOwnerSince</targetReference>
         </connector>
-        <filterFormula>ISCHANGED({!$Record.OwnerId})</filterFormula>
+        <filterFormula>OR(ISCHANGED({!$Record.OwnerId}), ISNEW())</filterFormula>
         <object>Lead</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
