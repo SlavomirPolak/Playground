@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowTest xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Test insert functionality</description>
+    <flowApiName>NN_LeadBeforeUpsert</flowApiName>
+    <label>Insert</label>
+    <testPoints>
+        <elementApiName>Start</elementApiName>
+        <parameters>
+            <leftValueReference>$Record</leftValueReference>
+            <type>InputTriggeringRecordInitial</type>
+            <value>
+                <sobjectValue>{&quot;CleanStatus&quot;:&quot;Pending&quot;,&quot;Company&quot;:&quot;ACME&quot;,&quot;FirstName&quot;:&quot;Bob&quot;,&quot;IsUnreadByOwner&quot;:true,&quot;LastName&quot;:&quot;test01&quot;,&quot;LeadSource&quot;:&quot;Web&quot;,&quot;NN_OwnerSince__c&quot;:&quot;2023-11-11T21:18:44.000Z&quot;,&quot;OwnerId&quot;:&quot;0052o00000DDBAHAA5&quot;,&quot;Salutation&quot;:&quot;Mr.&quot;,&quot;Status&quot;:&quot;Open - Not Contacted&quot;}</sobjectValue>
+            </value>
+        </parameters>
+    </testPoints>
+    <testPoints>
+        <assertions>
+            <conditions>
+                <leftValueReference>$Record.NN_OwnerSince__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <errorMessage>Owner Since field is blank!</errorMessage>
+        </assertions>
+        <elementApiName>Finish</elementApiName>
+    </testPoints>
+</FlowTest>

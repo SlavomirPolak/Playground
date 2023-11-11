@@ -14,6 +14,10 @@
 		<name>Flow</name>
 	</types>
 	<types>
+		<members>NN_LeadBeforeUpsert_Insert</members>
+		<name>FlowTest</name>
+	</types>
+	<types>
 		<members>Lead-Lead %28Marketing%29 Layout</members>
 		<members>Lead-Lead %28Sales%29 Layout</members>
 		<members>Lead-Lead %28Support%29 Layout</members>
