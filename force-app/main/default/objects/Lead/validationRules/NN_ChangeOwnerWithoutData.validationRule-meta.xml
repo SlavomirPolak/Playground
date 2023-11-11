@@ -2,15 +2,26 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NN_ChangeOwnerWithoutData</fullName>
     <active>true</active>
-    <description>Prevent User from changing owner if Country, Lead Source and No of Employees are null.</description>
+    <description>Prevent User from changing owner if Country, Lead Source and No of Employees are null.
+System Administrator and Contract Manager profiles do not need to fill in the No of Employees and System Administrator profile also does not need to fill in Country.</description>
     <errorConditionFormula>AND(
-				ISCHANGED(OwnerId),
-				NOT(CONTAINS(&apos;System Administrator,Contract Manager&apos;, $Profile.Name)),
-				OR(
-								ISNULL(NN_Country__c),
-				    ISPICKVAL(LeadSource, &apos;None Selected&apos;),
-								ISNULL(NumberOfEmployees)
-				)								
+    ISCHANGED(OwnerId),
+        OR(
+												AND(
+																ISNULL(Country),
+																NOT($Profile.Name == &apos;System Administrator&apos;)
+												),
+												ISPICKVAL(LeadSource, &apos;&apos;),
+												AND(
+																ISNULL(NumberOfEmployees),
+																NOT(
+																				CONTAINS(
+																								&apos;System Administrator,Contract Manager&apos;,
+																								$Profile.Name
+																				)
+																)
+												)
+								)
 )</errorConditionFormula>
     <errorMessage>Please fill in Country, Lead Source and No of Employees!</errorMessage>
 </ValidationRule>
