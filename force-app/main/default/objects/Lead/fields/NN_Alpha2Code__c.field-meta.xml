@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NN_Alpha2Code__c</fullName>
+    <description>Two letter country codes defined in ISO 3166-1. Value is auto-populated via NN_CountryTrigger.</description>
     <externalId>false</externalId>
     <label>Alpha 2 Code</label>
     <length>10</length>

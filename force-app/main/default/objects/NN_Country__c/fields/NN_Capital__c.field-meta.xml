@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NN_Capital__c</fullName>
+    <description>Name of the Capital city of Country.</description>
     <externalId>false</externalId>
     <label>Capital</label>
     <length>255</length>
