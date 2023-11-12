@@ -20,7 +20,8 @@ public without sharing class NN_CountryLayerService {
 
         if(response.getStatusCode() == SUCCESS_REST_RESPONSE) {            
             List<NN_CountryLayerPayload> payload = (List<NN_CountryLayerPayload>)JSON.deserialize(response.getBody(), List<NN_CountryLayerPayload>.class);
-            List<NN_Country__c> countriesToUpdate = mapCountryLayerResponseToCountry(payload);
+            Map<String, NN_Country__c> countriesByCountryName = mapCountryLayerResponseToCountry(payload);
+            List<NN_Country__c> countriesToUpdate = processCountries(countriesByCountryName);
             Database.upsert(countriesToUpdate, NN_Country__c.Name);
         } else {
             // create custom logging service to log an error
@@ -44,13 +45,46 @@ public without sharing class NN_CountryLayerService {
     }
 
     /**
+     * @description 
+     */
+    private static List<NN_Country__c> processCountries(Map<String, NN_Country__c> countriesByCountryName) {
+
+        List<NN_Country__c> countriesToUpdate = new List<NN_Country__c>();
+        List<NN_Country__c> currentCountries = NN_CountrySelector.selectCountryByName(countriesByCountryName.keySet());
+        Map<String, NN_Country__c> currentCountriesByCountryName = new Map<String, NN_Country__c>();
+
+        System.debug('we are here');
+
+        for (NN_Country__c currentCountry : currentCountries) {
+            currentCountriesByCountryName.put(currentCountry.Name, currentCountry);
+            //countriesByCountryName.get(currentCountry.NN_Country__c).Id = currentCountry.Id;
+        }
+
+        for (NN_Country__c incomingCountry : countriesByCountryName.values()) {
+
+            NN_UtilityClass util = new NN_UtilityClass();
+
+            System.debug('we are processing ' + incomingCountry);
+            System.debug('with  ' + currentCountriesByCountryName.get(incomingCountry.Name));
+            System.debug('equals ' + !util.compareFields(currentCountriesByCountryName.get(incomingCountry.Name), incomingCountry));
+
+            if (!util.compareFields(currentCountriesByCountryName.get(incomingCountry.Name), incomingCountry)) {        
+                System.debug('we are inserting: ' + incomingCountry);
+                countriesToUpdate.add(incomingCountry);
+            }
+        }
+
+        return countriesToUpdate;
+    }
+
+    /**
      * @description method map NN_CountryLayerPayload (payload from CountryLayer REST call) to NN_Country__c object.
      * @param  payload list of NN_CountryLayerPayload
      * @return list of NN_Country__c
      */
-    private static List<NN_Country__c> mapCountryLayerResponseToCountry(List<NN_CountryLayerPayload> payload) {
+    private static Map<String, NN_Country__c> mapCountryLayerResponseToCountry(List<NN_CountryLayerPayload> payload) {
 
-        List<NN_Country__c> countries = new List<NN_Country__c>();
+        Map<String, NN_Country__c> countriesByCountryName = new Map<String, NN_Country__c>();
         
         for (NN_CountryLayerPayload countryLayer : payload) {
 
@@ -62,10 +96,10 @@ public without sharing class NN_CountryLayerService {
             country.NN_Region__c = countryLayer.region;
             country.NN_RegionalBlocs__c = countryLayer.regionalBlocs;
 
-            countries.add(country);
+            countriesByCountryName.put(country.Name, country);
         }
 
-        return countries;
+        return countriesByCountryName;
     }
 
     /**
