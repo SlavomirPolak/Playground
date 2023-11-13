@@ -37,7 +37,7 @@ public with sharing class NN_CountryTriggerHandler {
         for (NN_Country__c country : newMap.values()) {
             countriesByCountryName.put(country.Name, country);
 
-            // United States of America is used in external system as USA therefore special logic is needed
+            // United States of America is used as Name in external system as USA therefore special logic is needed
             if (USA_MAPPING.equals(country.Name)) {
                 countriesByCountryName.put(country.NN_Alpha3code__c, country);
             }
@@ -54,7 +54,8 @@ public with sharing class NN_CountryTriggerHandler {
             leadToBeUpdated.NN_RegionalBlocs__c = countriesByCountryName.get(leadToBeUpdated.Country).NN_RegionalBlocs__c;
         }
 
-        // add logging
-        Database.update(leadsToBeUpdated);
+        Database.SaveResult[] results = Database.update(leadsToBeUpdated);
+
+        NN_UtilityClass.processInsertResult('NN_CountryLayerService.updateCountries', results);
     }
 }

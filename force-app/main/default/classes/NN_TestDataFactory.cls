@@ -1,5 +1,5 @@
 /**
- * @description Test data factory method to create common test data
+ * @description Test data factory class to create common test data
  */
 @isTest
 public with sharing class NN_TestDataFactory {

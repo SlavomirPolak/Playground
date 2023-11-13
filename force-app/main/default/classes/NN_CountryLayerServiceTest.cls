@@ -20,9 +20,11 @@ public with sharing class NN_CountryLayerServiceTest {
         System.assertEquals(NUMBER_OF_COUNTRIES, returnedCountries.size());
 
         Map<String, NN_Country__c> expectedCountries = NN_TestDataFactory.prepareDefaultCountries();
-        
-        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
-        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
+        List<NN_Log__c> logs = NN_LogSelector.selectAllLogs();
+
+        System.assertEquals(0, logs.size());        
+        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)), 'Countries are not equal!');
+        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)), 'Countries are not equal!');
     }
 
     @IsTest
@@ -56,8 +58,8 @@ public with sharing class NN_CountryLayerServiceTest {
 
         Map<String, NN_Country__c> expectedCountries = NN_TestDataFactory.prepareDefaultCountries();
 
-        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
-        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
+        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)), 'Countries are not equal!');
+        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)), 'Countries are not equal!');
     }
 
     @IsTest
@@ -112,8 +114,8 @@ public with sharing class NN_CountryLayerServiceTest {
 
         Map<String, NN_Country__c> expectedCountries = NN_TestDataFactory.prepareDefaultCountries();
 
-        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
-        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
+        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)), 'Countries are not equal!');
+        System.assert(equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)), 'Countries are not equal!');
     }
 
     @IsTest
@@ -126,8 +128,11 @@ public with sharing class NN_CountryLayerServiceTest {
         Test.stopTest();
 
         List<NN_Country__c> returnedCountries = NN_CountrySelector.selectAllCountries();
+        List<NN_Log__c> logs = NN_LogSelector.selectAllLogs();
 
         System.assertEquals(0, returnedCountries.size());
+        System.assertEquals(1, logs.size());
+        System.assert(logs.get(0).Name.contains(NN_CountryLayerService.LOG_CLASS_NAME), 'Log name does NOT contain expected Class name');
     }
 
     @IsTest
@@ -142,8 +147,11 @@ public with sharing class NN_CountryLayerServiceTest {
         Test.stopTest();
 
         List<NN_Country__c> returnedCountries = NN_CountrySelector.selectAllCountries();
+        List<NN_Log__c> logs = NN_LogSelector.selectAllLogs();
 
         System.assertEquals(NUMBER_OF_COUNTRIES, returnedCountries.size());
+        System.assertEquals(1, logs.size());
+        System.assert(logs.get(0).Name.contains(NN_CountryLayerService.LOG_CLASS_NAME), 'Log name does NOT contain expected Class name');
     }
 
     @IsTest
@@ -158,21 +166,26 @@ public with sharing class NN_CountryLayerServiceTest {
         Test.stopTest();
 
         List<NN_Country__c> returnedCountries = NN_CountrySelector.selectAllCountries();
+        List<NN_Log__c> logs = NN_LogSelector.selectAllLogs();
 
         System.assertEquals(1, returnedCountries.size());
+        System.assertEquals(1, logs.size());
+        System.assert(logs.get(0).Name.contains(NN_CountryLayerService.LOG_CLASS_NAME), 'Log name does NOT contain expected Class name');
     }
 
-    /***** Helper methods ******/
+    /***** HELPER METHODS *****/
 
     /**
-     * @description perform equality check without Id field on two NN_Country__c objects
+     * @description perform equality check without Id field on two NN_Country__c objects.
+     * Method is used only for testing.
      * @param  countryA first NN_Country__c object
      * @param  countryB second NN_Country__c object
      * @return          return True if objects are equals without Id
      */
-    private static Boolean equalsWithoutId(NN_Country__c countryA, NN_Country__c countryB) {
+    public static Boolean equalsWithoutId(NN_Country__c countryA, NN_Country__c countryB) {
         
         countryA.Id = countryB.Id;
+        countryA.NN_RegionalBlocs__c = countryB.NN_RegionalBlocs__c;
         return countryA == countryB;
     }
 }
