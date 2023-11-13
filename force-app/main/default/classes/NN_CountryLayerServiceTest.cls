@@ -20,10 +20,9 @@ public with sharing class NN_CountryLayerServiceTest {
         System.assertEquals(NUMBER_OF_COUNTRIES, returnedCountries.size());
 
         Map<String, NN_Country__c> expectedCountries = NN_TestDataFactory.prepareDefaultCountries();
-        NN_UtilityClass util = new NN_UtilityClass();
         
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
     }
 
     @IsTest
@@ -56,10 +55,9 @@ public with sharing class NN_CountryLayerServiceTest {
         System.assertEquals(NUMBER_OF_COUNTRIES, returnedCountries.size());
 
         Map<String, NN_Country__c> expectedCountries = NN_TestDataFactory.prepareDefaultCountries();
-        NN_UtilityClass util = new NN_UtilityClass();
 
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
     }
 
     @IsTest
@@ -85,10 +83,9 @@ public with sharing class NN_CountryLayerServiceTest {
         System.assertEquals(NUMBER_OF_COUNTRIES, returnedCountries.size());
 
         Map<String, NN_Country__c> expectedCountries = NN_TestDataFactory.prepareDefaultCountries();
-        NN_UtilityClass util = new NN_UtilityClass();
 
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
     }
 
     @IsTest
@@ -114,10 +111,9 @@ public with sharing class NN_CountryLayerServiceTest {
         System.assertEquals(NUMBER_OF_COUNTRIES, returnedCountries.size());
 
         Map<String, NN_Country__c> expectedCountries = NN_TestDataFactory.prepareDefaultCountries();
-        NN_UtilityClass util = new NN_UtilityClass();
 
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
-        System.assert(util.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(0).Name), returnedCountries.get(0)));
+        System.assert(NN_UtilityClass.equalsWithoutId(expectedCountries.get(returnedCountries.get(1).Name), returnedCountries.get(1)));
     }
 
     @IsTest

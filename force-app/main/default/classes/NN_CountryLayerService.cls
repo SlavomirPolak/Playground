@@ -18,14 +18,16 @@ public without sharing class NN_CountryLayerService {
 
         HttpResponse response = performCalloutToCountryLayer();
 
-        if(response.getStatusCode() == SUCCESS_REST_RESPONSE) {            
+        if (response.getStatusCode() == SUCCESS_REST_RESPONSE) {
             List<NN_CountryLayerPayload> payload = (List<NN_CountryLayerPayload>)JSON.deserialize(response.getBody(), List<NN_CountryLayerPayload>.class);
             Map<String, NN_Country__c> countriesByCountryName = mapCountryLayerResponseToCountry(payload);
             List<NN_Country__c> countriesToUpdate = processCountries(countriesByCountryName);
-            Database.upsert(countriesToUpdate, NN_Country__c.Name);
+            
+            Database.UpsertResult[] upsertResults = Database.upsert(countriesToUpdate, NN_Country__c.Name);
+            NN_UtilityClass.processUpsertResult('NN_CountryLayerService.updateCountries', upsertResults);
         } else {
-            // create custom logging service to log an error
             System.debug('The status code returned was not expected: ' + response.getStatusCode() + ' ' + response.getStatus());
+            Database.insert(NN_UtilityClass.createLog('NN_CountryLayerService.updateCountries', 'An error occured during an API call. ' + response.getStatus()));
         }
     }
 
@@ -45,36 +47,30 @@ public without sharing class NN_CountryLayerService {
     }
 
     /**
-     * @description 
+     * @description compare incoming Countries and compares them with already existing counterparts. If there are changes on listed fields, Country can be updated.
+     * Listed fields: Name, NN_Alpha2Code__c, NN_Alpha3code__c, NN_Capital__c, NN_Region__c, NN_RegionalBlocs__c
+     * @param  countriesByCountryName incoming Countries in map: key: Name, value: NN_Country__c
+     * @return                        return list of countries that can be upserted
      */
     private static List<NN_Country__c> processCountries(Map<String, NN_Country__c> countriesByCountryName) {
 
-        List<NN_Country__c> countriesToUpdate = new List<NN_Country__c>();
+        List<NN_Country__c> countriesToUpsert = new List<NN_Country__c>();
         List<NN_Country__c> currentCountries = NN_CountrySelector.selectCountryByName(countriesByCountryName.keySet());
         Map<String, NN_Country__c> currentCountriesByCountryName = new Map<String, NN_Country__c>();
 
-        System.debug('we are here');
-
         for (NN_Country__c currentCountry : currentCountries) {
             currentCountriesByCountryName.put(currentCountry.Name, currentCountry);
-            //countriesByCountryName.get(currentCountry.NN_Country__c).Id = currentCountry.Id;
         }
 
         for (NN_Country__c incomingCountry : countriesByCountryName.values()) {
 
-            NN_UtilityClass util = new NN_UtilityClass();
-
-            System.debug('we are processing ' + incomingCountry);
-            System.debug('with  ' + currentCountriesByCountryName.get(incomingCountry.Name));
-            System.debug('equals ' + !util.compareFields(currentCountriesByCountryName.get(incomingCountry.Name), incomingCountry));
-
-            if (!util.compareFields(currentCountriesByCountryName.get(incomingCountry.Name), incomingCountry)) {        
+            if (!compareFields(currentCountriesByCountryName.get(incomingCountry.Name), incomingCountry)) {        
                 System.debug('we are inserting: ' + incomingCountry);
-                countriesToUpdate.add(incomingCountry);
+                countriesToUpsert.add(incomingCountry);
             }
         }
 
-        return countriesToUpdate;
+        return countriesToUpsert;
     }
 
     /**
@@ -100,6 +96,22 @@ public without sharing class NN_CountryLayerService {
         }
 
         return countriesByCountryName;
+    }
+
+    /**
+     * @description perform equality on fields of NN_Country__c object
+     * @param  countryA first NN_Country__c object
+     * @param  countryB second NN_Country__c object
+     * @return          return True if criteria are met
+     */
+    public static Boolean compareFields(NN_Country__c countryA, NN_Country__c countryB) {
+        
+        return (countryA != null && countryB != null) && (countryA.Name == countryB.Name &&
+        countryA.NN_Alpha2Code__c == countryB.NN_Alpha2Code__c &&
+        countryA.NN_Alpha3code__c == countryB.NN_Alpha3code__c &&
+        countryA.NN_Capital__c == countryB.NN_Capital__c &&
+        countryA.NN_Region__c == countryB.NN_Region__c &&
+        countryA.NN_RegionalBlocs__c == countryB.NN_RegionalBlocs__c);
     }
 
     /**

@@ -9,7 +9,7 @@ public with sharing class NN_UtilityClass {
      * @param  countryB second NN_Country__c object
      * @return          return True if objects are equals without Id
      */
-    public Boolean equalsWithoutId(NN_Country__c countryA, NN_Country__c countryB) {
+    public static Boolean equalsWithoutId(NN_Country__c countryA, NN_Country__c countryB) {
         
         countryA.Id = countryB.Id;
         countryA.NN_RegionalBlocs__c = countryB.NN_RegionalBlocs__c;
@@ -17,18 +17,52 @@ public with sharing class NN_UtilityClass {
     }
 
     /**
-     * @description perform equality on fields of NN_Country__c object
-     * @param  countryA first NN_Country__c object
-     * @param  countryB second NN_Country__c object
-     * @return          return True if criteria are met
+     * @description process Database.upsert() result and creates log
+     * @param  classAndMethod       class.method
+     * @param  results              result of insertion
      */
-    public Boolean compareFields(NN_Country__c countryA, NN_Country__c countryB) {
-        
-        return (countryA != null && countryB != null) && (countryA.Name == countryB.Name &&
-        countryA.NN_Alpha2Code__c == countryB.NN_Alpha2Code__c &&
-        countryA.NN_Alpha3code__c == countryB.NN_Alpha3code__c &&
-        countryA.NN_Capital__c == countryB.NN_Capital__c &&
-        countryA.NN_Region__c == countryB.NN_Region__c &&
-        countryA.NN_RegionalBlocs__c == countryB.NN_RegionalBlocs__c);
+    public static void processUpsertResult(String classAndMethod, Database.UpsertResult[] results) {
+
+        List<NN_Log__c> logs = new List<NN_Log__c>();
+
+        for (Integer index = 0, size = results.size(); index < size; index++) {
+            if (!results[index].isSuccess()) {
+                logs.add(createLog(classAndMethod, String.valueOf(results[index].getErrors())));
+            }
+        }
+
+        Database.insert(logs);
+    }
+
+    /**
+     * @description process Database.insert() result and creates log
+     * @param  classAndMethod       class.method
+     * @param  results              result of insertion
+     */
+    public static void processInsertResult(String classAndMethod, Database.SaveResult[] results) {
+
+        List<NN_Log__c> logs = new List<NN_Log__c>();
+
+        for (Integer index = 0, size = results.size(); index < size; index++) {
+            if (!results[index].isSuccess()) {
+                logs.add(createLog(classAndMethod, String.valueOf(results[index].getErrors())));
+            }
+        }
+
+        Database.insert(logs);
+    }
+
+    /**
+     * @description insert new Log based on the input
+     * @param  name    log name - class.method
+     * @param  message log message
+     */
+    public static NN_Log__c createLog(String name, String message) {
+
+        NN_Log__c newLog = new NN_Log__c();
+        newLog.Name = name;
+        newLog.NN_Message__c = message;
+
+        return newLog;
     }
 }
