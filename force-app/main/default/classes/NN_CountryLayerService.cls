@@ -7,6 +7,9 @@ public without sharing class NN_CountryLayerService {
     private static final String ACCESS_KEY = 'a7272c433579885ad6be3efda47401a0';
     private static final String ENDPOINT = 'http://api.countrylayer.com/v2/all?access_key=' + ACCESS_KEY;
     private static final Integer SUCCESS_REST_RESPONSE = 200;
+
+    @TestVisible
+    private static final String LOG_CLASS_NAME = 'NN_CountryLayerService';
     
     /**
      * @description perform a REST call to CountryLayer service in order to download data.
@@ -24,10 +27,9 @@ public without sharing class NN_CountryLayerService {
             List<NN_Country__c> countriesToUpdate = processCountries(countriesByCountryName);
             
             Database.UpsertResult[] upsertResults = Database.upsert(countriesToUpdate, NN_Country__c.Name);
-            NN_UtilityClass.processUpsertResult('NN_CountryLayerService.updateCountries', upsertResults);
+            NN_UtilityClass.processUpsertResult(LOG_CLASS_NAME + '.updateCountries', upsertResults);
         } else {
-            System.debug('The status code returned was not expected: ' + response.getStatusCode() + ' ' + response.getStatus());
-            Database.insert(NN_UtilityClass.createLog('NN_CountryLayerService.updateCountries', 'An error occured during an API call. ' + response.getStatus()));
+            Database.insert(NN_UtilityClass.createLog(LOG_CLASS_NAME + '.updateCountries', 'An error occured during an API call. ' + response.getStatus()));
         }
     }
 
@@ -64,8 +66,7 @@ public without sharing class NN_CountryLayerService {
 
         for (NN_Country__c incomingCountry : countriesByCountryName.values()) {
 
-            if (!compareFields(currentCountriesByCountryName.get(incomingCountry.Name), incomingCountry)) {        
-                System.debug('we are inserting: ' + incomingCountry);
+            if (!compareFields(currentCountriesByCountryName.get(incomingCountry.Name), incomingCountry)) {
                 countriesToUpsert.add(incomingCountry);
             }
         }

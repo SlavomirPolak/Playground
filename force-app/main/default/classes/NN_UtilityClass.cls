@@ -2,19 +2,6 @@
  * @description contains utility methods 
  */
 public with sharing class NN_UtilityClass {
-    
-    /**
-     * @description perform equality check without Id field on two NN_Country__c objects
-     * @param  countryA first NN_Country__c object
-     * @param  countryB second NN_Country__c object
-     * @return          return True if objects are equals without Id
-     */
-    public static Boolean equalsWithoutId(NN_Country__c countryA, NN_Country__c countryB) {
-        
-        countryA.Id = countryB.Id;
-        countryA.NN_RegionalBlocs__c = countryB.NN_RegionalBlocs__c;
-        return countryA == countryB;
-    }
 
     /**
      * @description process Database.upsert() result and creates log
@@ -49,7 +36,9 @@ public with sharing class NN_UtilityClass {
             }
         }
 
-        Database.insert(logs);
+        if (!logs.isEmpty()) {
+            Database.insert(logs);
+        }
     }
 
     /**
