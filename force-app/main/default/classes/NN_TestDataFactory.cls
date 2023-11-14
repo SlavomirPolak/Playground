@@ -45,6 +45,16 @@ public with sharing class NN_TestDataFactory {
     @TestVisible
     private static final String US_REGION = 'Americas';
 
+    /***** LEAD TEST *****/
+    @TestVisible
+    private static final String LEAD_A_LAST_NAME = 'Doe';
+
+    /***** LOG TEST *****/
+    @TestVisible
+    private static final String CLASS_NAME = 'NN_ClassA';
+    @TestVisible
+    private static final String MESSAGE = 'Error';
+
     
     /**
      * @description prepared test payload for CountryLayer service
@@ -118,12 +128,14 @@ public with sharing class NN_TestDataFactory {
         Lead leadA = new Lead();
         leadA.Company = 'ACME';
         leadA.FirstName = 'John';
-        leadA.LastName = 'Doe';
+        leadA.LastName = LEAD_A_LAST_NAME;
         leadA.Status = 'Working - Contacted';
         leadA.Country = CZECHIA_NAME;
         leadA.NN_Alpha2Code__c = CZECHIA_A2C;
+        leadA.NN_Alpha3Code__c = CZECHIA_A3C;
         leadA.NN_Capital__c = CZECHIA_CAPITAL;
         leadA.NN_Region__c = EUROPE_REGION;
+        leadA.NN_RegionalBlocs__c = CZECHIA_RB;
 
         Lead leadB = new Lead();
         leadB.Company = 'ADAD';
@@ -140,5 +152,21 @@ public with sharing class NN_TestDataFactory {
         leadC.Country = 'USA';
 
         return new Map<String, Lead>{leadA.LastName => leadA, leadB.LastName => leadB, leadC.LastName => leadC};
+    }
+
+    /**
+     * @description prepared default NN_Log__c for testing purpose
+     */
+    public static List<NN_Log__c> prepareDefaultLogs() {
+
+        NN_Log__c newLogA = new NN_Log__c();
+        newLogA.Name = CLASS_NAME;
+        newLogA.NN_Message__c = MESSAGE;
+
+        NN_Log__c newLogB = new NN_Log__c();
+        newLogB.Name = CLASS_NAME;
+        newLogB.NN_Message__c = MESSAGE;
+
+        return new List<NN_Log__c>{newLogA, newLogB};
     }
 }

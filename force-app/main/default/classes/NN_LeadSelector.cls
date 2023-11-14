@@ -12,7 +12,6 @@ public class NN_LeadSelector {
         
         return [SELECT
                     Id,
-                    Name,
                     NN_Alpha2Code__c,
                     NN_Alpha3code__c,
                     NN_Capital__c,
@@ -31,7 +30,6 @@ public class NN_LeadSelector {
         
         return [SELECT
                     Id,
-                    Name,
                     NN_Alpha2Code__c,
                     NN_Alpha3code__c,
                     NN_Capital__c,
