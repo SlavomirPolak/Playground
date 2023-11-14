@@ -38,4 +38,17 @@ public class NN_LeadSelector {
                     Country
                 FROM Lead];
     }
+
+    /**
+     * @description select Owner Since data for Lead by Id
+     * @param  leadId lead Id
+     * @return list of Lead
+     */
+    public static List<Lead> selectOwnerSinceDataById(Id leadId) {
+        
+        return [SELECT
+                    NN_OwnerSince__c
+                FROM Lead
+                WHERE Id = :leadId];
+    }
 }

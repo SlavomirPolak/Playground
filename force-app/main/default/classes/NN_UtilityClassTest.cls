@@ -5,7 +5,7 @@
 public with sharing class NN_UtilityClassTest {
 
     private static final String TEST_STRING = 'test';
-
+    private static final String FAILED_RESULT = '[{"success":false,"errors":[{"message":"You cannot do this...","statusCode":"FIELD_CUSTOM_VALIDATION_EXCEPTION"}]}]';
 
     @IsTest
     static void testCreateLogFullParam() {
@@ -50,7 +50,7 @@ public with sharing class NN_UtilityClassTest {
     @IsTest
     static void testProcessInsertResult() {
         
-        Database.SaveResult[] results = (List<Database.SaveResult>) JSON.deserialize('[{"success":false,"errors":[{"message":"You cannot do this...","statusCode":"FIELD_CUSTOM_VALIDATION_EXCEPTION"}]}]', List<Database.SaveResult>.class);
+        Database.SaveResult[] results = (List<Database.SaveResult>) JSON.deserialize(FAILED_RESULT, List<Database.SaveResult>.class);
 
         Test.startTest();
         NN_UtilityClass.processInsertResult(TEST_STRING, results);
@@ -65,7 +65,7 @@ public with sharing class NN_UtilityClassTest {
     @IsTest
     static void testProcessInsertResultNullParam() {
         
-        Database.SaveResult[] results = (List<Database.SaveResult>) JSON.deserialize('[{"success":false,"errors":[{"message":"You cannot do this...","statusCode":"FIELD_CUSTOM_VALIDATION_EXCEPTION"}]}]', List<Database.SaveResult>.class);
+        Database.SaveResult[] results = (List<Database.SaveResult>) JSON.deserialize(FAILED_RESULT, List<Database.SaveResult>.class);
 
         Test.startTest();
         NN_UtilityClass.processInsertResult(null, null);
@@ -79,7 +79,7 @@ public with sharing class NN_UtilityClassTest {
     @IsTest
     static void testProcessUpsertResult() {
         
-        Database.UpsertResult[] results = (List<Database.UpsertResult>) JSON.deserialize('[{"success":false,"errors":[{"message":"You cannot do this...","statusCode":"FIELD_CUSTOM_VALIDATION_EXCEPTION"}]}]', List<Database.UpsertResult>.class);
+        Database.UpsertResult[] results = (List<Database.UpsertResult>) JSON.deserialize(FAILED_RESULT, List<Database.UpsertResult>.class);
 
         Test.startTest();
         NN_UtilityClass.processUpsertResult(TEST_STRING, results);
@@ -94,7 +94,7 @@ public with sharing class NN_UtilityClassTest {
     @IsTest
     static void testProcessUpsertResultNullParam() {
         
-        Database.UpsertResult[] results = (List<Database.UpsertResult>) JSON.deserialize('[{"success":false,"errors":[{"message":"You cannot do this...","statusCode":"FIELD_CUSTOM_VALIDATION_EXCEPTION"}]}]', List<Database.UpsertResult>.class);
+        Database.UpsertResult[] results = (List<Database.UpsertResult>) JSON.deserialize(FAILED_RESULT, List<Database.UpsertResult>.class);
 
         Test.startTest();
         NN_UtilityClass.processUpsertResult(null, null);

@@ -3,6 +3,8 @@
  */
 @isTest
 public with sharing class NN_TestDataFactory {
+
+    private static final String ADMIN_PROFILE_NAME = 'System Administrator';
     
     @TestVisible
     private static final String EUROPE_REGION = 'Europe';
@@ -168,5 +170,20 @@ public with sharing class NN_TestDataFactory {
         newLogB.NN_Message__c = MESSAGE;
 
         return new List<NN_Log__c>{newLogA, newLogB};
+    }
+
+    /**
+     * @description prepared default Admin User for testing purpose
+     */
+    public static User prepareDefaultAdminUser() {
+
+        Profile adminProfile = NN_ProfileSelector.selectProfileIdByName(ADMIN_PROFILE_NAME).get(0);
+
+        User testUser = new User(Alias = 'adminA', Email='adminuser@testorg.com', 
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+            LocaleSidKey='en_US', ProfileId = adminProfile.Id, 
+            TimeZoneSidKey='America/Los_Angeles', UserName='adminuser@testorg.com');
+
+        return testUser;
     }
 }
