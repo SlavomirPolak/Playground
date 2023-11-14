@@ -87,7 +87,8 @@ public without sharing class NN_CountryLayerService {
 
             NN_Country__c country = new NN_Country__c();
             country.NN_Capital__c = countryLayer.capital;
-            country.Name = countryLayer.name;
+            // USA is comming as United States of America but it is named USA in Salesforce
+            country.Name = NN_Constant.USA_EX_SYS_NAME.equals(countryLayer.name) ? NN_Constant.USA_SALESFORCE_NAME :countryLayer.name;
             country.NN_Alpha2Code__c = countryLayer.alpha2Code;
             country.NN_Alpha3code__c = countryLayer.alpha3Code;
             country.NN_Region__c = countryLayer.region;

@@ -35,8 +35,6 @@ public with sharing class NN_TestDataFactory {
 
     /***** USA *****/
     @TestVisible
-    private static final String US_NAME = 'United States of America';
-    @TestVisible
     private static final String US_A2C = 'US';
     @TestVisible
     private static final String US_A3C = 'USA';
@@ -80,14 +78,14 @@ public with sharing class NN_TestDataFactory {
         czPayload.regionalBlocs = CZECHIA_RB;
 
         NN_CountryLayerService.NN_CountryLayerPayload usPayload = new NN_CountryLayerService.NN_CountryLayerPayload();
-        usPayload.Name = US_NAME;
+        usPayload.Name = NN_CountryLayerService.USA_EX_SYS_NAME;
         usPayload.alpha2Code = US_A2C;
         usPayload.alpha3Code = US_A3C;
         usPayload.capital = US_CAPITAL;
         usPayload.region = US_REGION;
         usPayload.regionalBlocs = US_RB;
 
-        return new Map<String, NN_CountryLayerService.NN_CountryLayerPayload>{SLOVAKIA_NAME => skPayload, CZECHIA_NAME => czPayload, US_NAME => usPayload};
+        return new Map<String, NN_CountryLayerService.NN_CountryLayerPayload>{SLOVAKIA_NAME => skPayload, CZECHIA_NAME => czPayload, NN_CountryLayerService.USA_EX_SYS_NAME => usPayload};
     }
 
     /**
@@ -112,14 +110,14 @@ public with sharing class NN_TestDataFactory {
         czechia.NN_RegionalBlocs__c = CZECHIA_RB;
 
         NN_Country__c us = new NN_Country__c();
-        us.Name = US_NAME;
+        us.Name = NN_Constant.USA_SALESFORCE_NAME;
         us.NN_Alpha2Code__c = US_A2C;
         us.NN_Alpha3Code__c = US_A3C;
         us.NN_Capital__c = US_CAPITAL;
         us.NN_Region__c = US_REGION;
         us.NN_RegionalBlocs__c = US_RB;
 
-        return new Map<String, NN_Country__c>{SLOVAKIA_NAME => slovakia, CZECHIA_NAME => czechia, US_NAME => us};
+        return new Map<String, NN_Country__c>{SLOVAKIA_NAME => slovakia, CZECHIA_NAME => czechia, NN_Constant.USA_SALESFORCE_NAME => us};
     }
 
     /**
