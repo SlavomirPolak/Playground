@@ -12,7 +12,6 @@ public class NN_LeadSelector {
         
         return [SELECT
                     Id,
-                    Name,
                     NN_Alpha2Code__c,
                     NN_Alpha3code__c,
                     NN_Capital__c,
@@ -31,7 +30,6 @@ public class NN_LeadSelector {
         
         return [SELECT
                     Id,
-                    Name,
                     NN_Alpha2Code__c,
                     NN_Alpha3code__c,
                     NN_Capital__c,
@@ -39,5 +37,18 @@ public class NN_LeadSelector {
                     NN_RegionalBlocs__c,
                     Country
                 FROM Lead];
+    }
+
+    /**
+     * @description select Owner Since data for Lead by Id
+     * @param  leadId lead Id
+     * @return list of Lead
+     */
+    public static List<Lead> selectOwnerSinceDataById(Id leadId) {
+        
+        return [SELECT
+                    NN_OwnerSince__c
+                FROM Lead
+                WHERE Id = :leadId];
     }
 }

@@ -3,9 +3,6 @@
  */
 public with sharing class NN_CountryTriggerHandler {
 
-    @TestVisible
-    private static final String USA_MAPPING = 'United States of America';
-
     /**
      * @description method is executed after insertion of NN_Country__c
      * @param  newMap A map of IDs to the new versions of the sObject records.
@@ -37,10 +34,6 @@ public with sharing class NN_CountryTriggerHandler {
         for (NN_Country__c country : newMap.values()) {
             countriesByCountryName.put(country.Name, country);
 
-            // United States of America is used as Name in external system as USA therefore special logic is needed
-            if (USA_MAPPING.equals(country.Name)) {
-                countriesByCountryName.put(country.NN_Alpha3code__c, country);
-            }
         }
 
         List<Lead> leadsToBeUpdated = NN_LeadSelector.selectLeadCountryDataByCountry(countriesByCountryName.keySet());

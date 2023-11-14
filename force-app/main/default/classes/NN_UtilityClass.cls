@@ -12,13 +12,17 @@ public with sharing class NN_UtilityClass {
 
         List<NN_Log__c> logs = new List<NN_Log__c>();
 
-        for (Integer index = 0, size = results.size(); index < size; index++) {
-            if (!results[index].isSuccess()) {
-                logs.add(createLog(classAndMethod, String.valueOf(results[index].getErrors())));
+        if (results != null && classAndMethod != null) {
+            for (Database.UpsertResult ur : results) {
+                if (!ur.isSuccess()) {
+                    logs.add(createLog(classAndMethod, String.valueOf(ur.getErrors())));
+                }
             }
         }
 
-        Database.insert(logs);
+        if (!logs.isEmpty()) {
+            Database.insert(logs);
+        }
     }
 
     /**
@@ -30,9 +34,11 @@ public with sharing class NN_UtilityClass {
 
         List<NN_Log__c> logs = new List<NN_Log__c>();
 
-        for (Integer index = 0, size = results.size(); index < size; index++) {
-            if (!results[index].isSuccess()) {
-                logs.add(createLog(classAndMethod, String.valueOf(results[index].getErrors())));
+        if (results != null && classAndMethod != null) {
+            for (Database.SaveResult sr : results) {
+                if (!sr.isSuccess()) {
+                    logs.add(createLog(classAndMethod, String.valueOf(sr.getErrors())));
+                }
             }
         }
 
