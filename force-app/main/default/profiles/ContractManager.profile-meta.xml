@@ -72,6 +72,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
+        <layout>Lead-Lead Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>NN_Log__c-Log Layout</layout>
     </layoutAssignments>
     <userLicense>Salesforce</userLicense>

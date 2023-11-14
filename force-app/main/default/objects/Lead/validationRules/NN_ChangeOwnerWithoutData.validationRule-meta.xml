@@ -8,7 +8,10 @@ System Administrator and Contract Manager profiles do not need to fill in the No
     ISCHANGED(OwnerId),
         OR(
 												AND(
-																ISNULL(Country),
+																OR(
+																				ISBLANK(Country),
+																				ISNULL(Country)
+																),
 																NOT($Profile.Name == &apos;System Administrator&apos;)
 												),
 												ISPICKVAL(LeadSource, &apos;&apos;),
