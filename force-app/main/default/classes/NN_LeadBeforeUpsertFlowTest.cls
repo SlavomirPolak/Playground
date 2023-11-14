@@ -2,7 +2,7 @@
  * @description Test for Flow NN_LeadBeforeUpsert. Flow test with update owner is not possible, therefore class is created.
  * https://ideas.salesforce.com/s/idea/a0B8W00000Nwyt3UAB/allow-owner-change-in-flow-debuggingtests
  * 
- * Test is without IsParallel=true ->  APEX_DATA_ACCESS_RESTRICTION, In parallel Apex tests, DML operations aren't permitted on this type of object: User: []
+ * Test is without IsParallel=true -> APEX_DATA_ACCESS_RESTRICTION, In parallel Apex tests, DML operations aren't permitted on this type of object: User: []
  */
 @IsTest
 public with sharing class NN_LeadBeforeUpsertFlowTest {
