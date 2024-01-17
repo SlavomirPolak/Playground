@@ -59,8 +59,6 @@ export default class DataTableEne extends LightningElement {
       for (columns.forEach((element) => prepareColumn()));
   }*/
 
-  // just a comment
-
   async handleSave(event) {
     // Convert datatable draft values into record objects
     const records = event.detail.draftValues.slice().map((draftValue) => {
