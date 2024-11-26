@@ -78,14 +78,14 @@ public with sharing class NN_TestDataFactory {
         czPayload.regionalBlocs = CZECHIA_RB;
 
         NN_CountryLayerService.NN_CountryLayerPayload usPayload = new NN_CountryLayerService.NN_CountryLayerPayload();
-        usPayload.Name = NN_CountryLayerService.USA_EX_SYS_NAME;
+        usPayload.Name = NN_Constant.USA_EX_SYS_NAME;
         usPayload.alpha2Code = US_A2C;
         usPayload.alpha3Code = US_A3C;
         usPayload.capital = US_CAPITAL;
         usPayload.region = US_REGION;
         usPayload.regionalBlocs = US_RB;
 
-        return new Map<String, NN_CountryLayerService.NN_CountryLayerPayload>{SLOVAKIA_NAME => skPayload, CZECHIA_NAME => czPayload, NN_CountryLayerService.USA_EX_SYS_NAME => usPayload};
+        return new Map<String, NN_CountryLayerService.NN_CountryLayerPayload>{SLOVAKIA_NAME => skPayload, CZECHIA_NAME => czPayload, NN_Constant.USA_EX_SYS_NAME => usPayload};
     }
 
     /**

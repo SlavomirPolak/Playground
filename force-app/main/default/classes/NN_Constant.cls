@@ -3,8 +3,6 @@
  */
 public with sharing class NN_Constant {
     
-    @TestVisible
-    private static final String USA_EX_SYS_NAME = 'United States of America';
-    @TestVisible
-    private static final String USA_SALESFORCE_NAME = 'USA';
+    public static final String USA_EX_SYS_NAME = 'United States of America';
+    public static final String USA_SALESFORCE_NAME = 'USA';
 }
